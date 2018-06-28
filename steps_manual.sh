@@ -9,10 +9,12 @@ curl -LO https://storage.googleapis.com/container-structure-test/latest/containe
 docker build -t mycluster.icp:8500/default/hello-container:latest .
 docker images | grep hello-container
 docker login --username=admin --password=admin mycluster.icp:8500
+kubectl delete images hello-container
 docker push  mycluster.icp:8500/default/hello-container:latest
 kubectl get images
 container-structure-test  -test.v   -image \${REGISTRY}/\${NAMESPACE}/hello-container:latest /opt/git/hellocontainer/hello-container-test.yaml
 
+helm delete hellocontainer --purge --tls
 helm install ./hellocontainer-chart/ -n hellocontainer --tls
 helm upgrade hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=latest -n hellocontainer --tls
 
