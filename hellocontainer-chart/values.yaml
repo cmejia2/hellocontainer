@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1 
 image:
-  repository: wizplaycluster.icp:8500/default/hello-container 
+  repository: mycluster.icp:8500/default/hello-container 
   tag: latest
   pullPolicy: Always
 service:
