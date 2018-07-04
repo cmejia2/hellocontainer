@@ -31,6 +31,8 @@ metadata:
   name: hello-service
   labels:
     app: hello-service
+  annotations:
+     prometheus.io/scrape: true
 spec:
   type: NodePort
   ports:
