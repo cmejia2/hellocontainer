@@ -32,13 +32,20 @@ docker tag   mycluster.icp:8500/default/hello-container:${VERSION} mycluster.icp
 kubectl get images
 
 # Create the Service point
-kubectl create -f /opt/git/hellocontainer.deployment.yml
+kubectl create -f /opt/git/hellocontainer/deployment.yml
 
 # Delete old versions of the deployment of this app if any running.
 helm delete hellocontainer --purge --tls
 
 # Install the new version of the app
+helm package ./myapp
+# Add Repository demo-charts
+# helm repo index charts --url helm add https://MyOwnRepo/mycharts
+# add demo charts to ICP catalog then SYNC REPOSITORIES
+# helm add ./hellocontainer-chart https://MyOwnRepo/mycharts
+# Helm install
 helm install ./hellocontainer-chart/ -n hellocontainer --tls
+# Helm update
 # helm upgrade hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${VERSION} -n hellocontainer --tls
 
 # Verify the new version was deployed
